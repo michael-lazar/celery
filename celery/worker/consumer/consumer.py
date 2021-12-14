@@ -412,6 +412,8 @@ class Consumer:
         reserved_requests.clear()
         if self.pool and self.pool.flush:
             self.pool.flush()
+        if self.hub and self.connection and self.connection.transport:
+            self.connection.transport.unregister_from_event_loop(self.connection, self.hub)
 
     def connect(self):
         """Establish the broker connection used for consuming tasks.
